@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -11,24 +11,45 @@ export class EmployeesService {
     @InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>,
   ) {}
 
+  //create employee
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const createEmployee = new this.employeeModel(createEmployeeDto);
     return createEmployee.save();
   }
 
-  findAll(): Promise<Employee[]> {
-    return this.employeeModel.find().exec();
+  //get all employees
+  async findAll(): Promise<Employee[]> {
+    const allEmployees = await this.employeeModel.find();
+    if (!allEmployees || allEmployees.length == 0) {
+      throw new NotFoundException('Employee data not found!');
+    }
+    return allEmployees;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} employee`;
+  //update employee
+  async update(
+    id: string,
+    updateEmployeeDto: UpdateEmployeeDto,
+  ): Promise<Employee> {
+    const employee = await this.employeeModel.findByIdAndUpdate(
+      id,
+      updateEmployeeDto,
+      {
+        new: true,
+      },
+    );
+    if (!employee) {
+      throw new NotFoundException();
+    }
+    return employee;
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return `This action updates a #${id} employee`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  //delete employee
+  async remove(id: string) {
+    const deletedEmployee = await this.employeeModel.findByIdAndDelete(id);
+    if (!deletedEmployee) {
+      throw new NotFoundException(`Student #${id} not found`);
+    }
+    return deletedEmployee;
   }
 }

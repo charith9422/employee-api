@@ -1,14 +1,19 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { IsMongoId, IsNotEmpty } from 'class-validator';
 import { HydratedDocument } from 'mongoose';
 
 export type EmployeeDocument = HydratedDocument<Employee>;
 
+export enum GenderType {
+  Male = 'M',
+  Female = 'F',
+}
 @Schema()
 export class Employee {
-  @Prop()
+  @Prop({ required: true })
   first_name: string;
 
-  @Prop()
+  @Prop({ required: true })
   last_name: string;
 
   @Prop()
@@ -19,9 +24,6 @@ export class Employee {
 
   @Prop()
   gender: string;
-
-  @Prop()
-  id: number;
 
   @Prop()
   photo: string;

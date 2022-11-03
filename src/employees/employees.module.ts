@@ -7,7 +7,7 @@ import { Employee, EmployeeSchema } from './entities/employee.entity';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Employee.name, schema: EmployeeSchema },
+      { name: Employee.name, schema: EmployeeSchema, collection: 'employee' },
     ]),
   ],
   controllers: [EmployeesController],
