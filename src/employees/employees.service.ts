@@ -48,7 +48,7 @@ export class EmployeesService {
   async remove(id: string) {
     const deletedEmployee = await this.employeeModel.findByIdAndDelete(id);
     if (!deletedEmployee) {
-      throw new NotFoundException(`Student #${id} not found`);
+      throw new NotFoundException(`Employee #${id} not found`);
     }
     return deletedEmployee;
   }
