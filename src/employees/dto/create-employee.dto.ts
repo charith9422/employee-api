@@ -29,7 +29,7 @@ export class CreateEmployeeDto {
   @ApiProperty({ required: false })
   email: string;
 
-  @IsPhoneNumber()
+  @IsPhoneNumber('LK')
   @ApiProperty({ required: false })
   number: string;
 
