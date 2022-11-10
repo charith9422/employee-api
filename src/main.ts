@@ -17,7 +17,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
   app.enableCors({
     allowedHeaders: ['content-type', 'access-control-allow-origin'],
-    origin: ['https://employee-manager-app.vercel.app/**'],
+    origin: ['https://employee-manager-app.vercel.app'],
     methods: ['POST', 'PUT', 'DELETE', 'GET'],
     credentials: false,
   });
