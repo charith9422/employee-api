@@ -7,7 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.enableCors({
     allowedHeaders: ['content-type'],
-    origin: 'https://employee-manager-app.vercel.app',
+    origin: ['https://employee-manager-app.vercel.app'],
+    methods: ['POST', 'PUT', 'DELETE', 'GET'],
     credentials: true,
   });
   app.useGlobalPipes(new ValidationPipe());
